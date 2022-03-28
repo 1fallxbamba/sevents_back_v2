@@ -1,5 +1,5 @@
 export interface Sevent {
-  code?: number;
+  code?: string;
   title: string;
   description: string;
   location: string;
@@ -7,5 +7,5 @@ export interface Sevent {
   places: number;
   starting: Date;
   ending: Date;
-  createdAt: Date;
+  createdAt?: Date;
 }

@@ -1,9 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity()
+@Entity('sevents')
 export class SeventEntity {
-  @PrimaryGeneratedColumn()
-  code: number;
+  @PrimaryColumn()
+  code: string;
 
   @Column()
   title: string;
@@ -26,7 +26,7 @@ export class SeventEntity {
   @Column()
   ending: Date;
 
-  @Column({
+  @CreateDateColumn({
     type: 'timestamp without time zone',
     default: () => 'CURRENT_TIMESTAMP',
   })

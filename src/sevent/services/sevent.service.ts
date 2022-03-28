@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Observable } from 'rxjs';
 
 import { Repository } from 'typeorm';
 
@@ -14,7 +13,7 @@ export class SeventService {
     private readonly seventRepository: Repository<SeventEntity>,
   ) {}
 
-//   createSevent(sevent: Sevent): Observable<Sevent> {
-//     return this.seventRepository.save(sevent);
-//   }
+  createSevent(sevent: Sevent) {
+    return this.seventRepository.save(sevent);
+  }
 }
