@@ -7,5 +7,6 @@ export interface Sevent {
   places: number;
   starting: Date;
   ending: Date;
+  picture: string;
   createdAt?: Date;
 }

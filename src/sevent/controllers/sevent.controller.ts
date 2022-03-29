@@ -8,9 +8,9 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 
-import { diskStorage } from 'multer';
-
 import { FileInterceptor } from '@nestjs/platform-express';
+
+import { diskStorage } from 'multer';
 
 import { Sevent } from '../models/sevent.model';
 import { SeventService } from '../services/sevent.service';
@@ -20,7 +20,19 @@ export class SeventController {
   constructor(private readonly seventService: SeventService) {}
 
   @Post()
-  async newSevent(@Body() seventData: Sevent) {
+  @UseInterceptors(
+    FileInterceptor('picture', {
+      storage: diskStorage({
+        destination: './public/images/',
+        filename: (req, file, cb) => {
+          const randomName = Math.random().toString(36).slice(2);
+          cb(null, `${randomName}_${file.originalname}`);
+        },
+      }),
+    }),
+  )
+  async newSevent(@Body() seventData: Sevent, @UploadedFile() file) {
+    seventData.picture = file.filename;
     const response = await this.seventService
       .createSevent(seventData)
       .catch((error) => {
@@ -41,21 +53,5 @@ export class SeventController {
       },
       data: response,
     };
-  }
-
-  @Post('test')
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './public/images/',
-        filename: (req, file, cb) => {
-          const randomName = Math.random().toString(36).slice(2);
-          cb(null, `${randomName}_${file.originalname}`);
-        },
-      }),
-    }),
-  )
-  async testing(@UploadedFile() file) {
-    return file;
   }
 }
