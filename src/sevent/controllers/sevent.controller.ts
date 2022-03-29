@@ -6,6 +6,8 @@ import {
   HttpStatus,
   UseInterceptors,
   UploadedFile,
+  Get,
+  Param,
 } from '@nestjs/common';
 
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -18,6 +20,44 @@ import { SeventService } from '../services/sevent.service';
 @Controller('sevents')
 export class SeventController {
   constructor(private readonly seventService: SeventService) {}
+
+  @Get()
+  async allSevents() {
+    const sevents = await this.seventService.returnSevents().catch((error) => {
+      throw new HttpException(
+        {
+          requestStatus: 'ERROR',
+          message: error.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    });
+
+    return {
+      requestStatus: 'SUCCESS',
+      data: sevents,
+    };
+  }
+
+  @Get(':code')
+  async oneSevent(@Param('code') code: string) {
+    const sevent = await this.seventService
+      .returnSevents(code)
+      .catch((error) => {
+        throw new HttpException(
+          {
+            requestStatus: 'ERROR',
+            message: error.message,
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      });
+
+    return {
+      requestStatus: 'SUCCESS',
+      data: sevent,
+    };
+  }
 
   @Post()
   @UseInterceptors(
@@ -38,7 +78,7 @@ export class SeventController {
       .catch((error) => {
         throw new HttpException(
           {
-            status: 'ERROR',
+            requestStatus: 'ERROR',
             message: error.message,
           },
           HttpStatus.BAD_REQUEST,
@@ -46,7 +86,7 @@ export class SeventController {
       });
 
     return {
-      status: 'SUCCESS',
+      requestStatus: 'SUCCESS',
       message: {
         en: 'New sevent successfully created',
         fr: 'Votre evenement a été créé avec succés.',

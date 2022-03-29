@@ -16,4 +16,12 @@ export class SeventService {
   createSevent(sevent: Sevent) {
     return this.seventRepository.save(sevent);
   }
+
+  returnSevents(code?: string) {
+    if (code) {
+      return this.seventRepository.findOneBy({ code });
+    } else {
+      return this.seventRepository.find();
+    }
+  }
 }
