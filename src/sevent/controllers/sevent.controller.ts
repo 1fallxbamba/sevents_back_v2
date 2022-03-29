@@ -10,6 +10,7 @@ import {
   Param,
   Put,
   Delete,
+  Patch,
 } from '@nestjs/common';
 
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -127,6 +128,33 @@ export class SeventController {
       message: {
         en: 'Event successfully updated',
         fr: 'Votre evenement a été mis à jour avec succés.',
+      },
+      data: response,
+    };
+  }
+
+  @Patch(':code')
+  async archiveSevent(@Param('code') code: string) {
+    const existingSevent = await this.seventService.findSevent(code);
+    existingSevent.archived = true;
+
+    const response = await this.seventService
+      .saveSevent(existingSevent)
+      .catch((error) => {
+        throw new HttpException(
+          {
+            requestStatus: 'ERROR',
+            message: error.message,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      });
+
+    return {
+      requestStatus: 'SUCCESS',
+      message: {
+        en: 'Event successfully archived',
+        fr: 'Votre evenement a été archivé avec succés.',
       },
       data: response,
     };

@@ -29,6 +29,9 @@ export class SeventEntity {
   @Column()
   picture: string;
 
+  @Column()
+  archived: boolean;
+
   @CreateDateColumn({
     type: 'timestamp without time zone',
     default: () => 'CURRENT_TIMESTAMP',

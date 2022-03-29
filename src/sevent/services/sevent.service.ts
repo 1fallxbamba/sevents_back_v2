@@ -18,7 +18,7 @@ export class SeventService {
   }
 
   findSevents() {
-    return this.seventRepository.find();
+    return this.seventRepository.find({ where: { archived: false } });
   }
 
   findSevent(code?: string) {

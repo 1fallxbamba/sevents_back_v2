@@ -8,5 +8,6 @@ export interface Sevent {
   starting: Date;
   ending: Date;
   picture: string;
+  archived: boolean;
   createdAt?: Date;
 }
