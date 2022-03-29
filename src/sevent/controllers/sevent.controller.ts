@@ -4,7 +4,13 @@ import {
   Post,
   HttpException,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+
+import { diskStorage } from 'multer';
+
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { Sevent } from '../models/sevent.model';
 import { SeventService } from '../services/sevent.service';
@@ -35,5 +41,21 @@ export class SeventController {
       },
       data: response,
     };
+  }
+
+  @Post('test')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './public/images/',
+        filename: (req, file, cb) => {
+          const randomName = Math.random().toString(36).slice(2);
+          cb(null, `${randomName}_${file.originalname}`);
+        },
+      }),
+    }),
+  )
+  async testing(@UploadedFile() file) {
+    return file;
   }
 }
