@@ -29,7 +29,7 @@ export class SeventService {
     return this.seventRepository.update(code, sevent);
   }
 
-  // deleteSevent(code: string) {
-  //   return this.seventRepository.delete(code);
-  // }
+  deleteSevent(code: string) {
+    return this.seventRepository.delete(code);
+  }
 }

@@ -9,6 +9,7 @@ import {
   Get,
   Param,
   Put,
+  Delete,
 } from '@nestjs/common';
 
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -131,49 +132,41 @@ export class SeventController {
     };
   }
 
-  // @Put(':code')
-  // @UseInterceptors(FileInterceptor('picture', fileUploadOptions))
-  // async archiveSevent(
-  //   @Body() seventData: Sevent,
-  //   @UploadedFile() file,
-  //   @Param('code') code: string,
-  // ) {
-  //   const existingSevent = await this.seventService.findSevent(code);
+  @Delete(':code')
+  async removeSevent(@Param('code') code: string) {
+    const existingSevent = await this.seventService.findSevent(code);
 
-  //   if (file) {
-  //     seventData.picture = file.filename;
-  //     unlink(`./public/images/${existingSevent.picture}`, (error) => {
-  //       if (error) {
-  //         throw new HttpException(
-  //           {
-  //             requestStatus: 'ERROR',
-  //             message: error.message,
-  //           },
-  //           HttpStatus.INTERNAL_SERVER_ERROR,
-  //         );
-  //       }
-  //     });
-  //   }
+    unlink(`./public/images/${existingSevent.picture}`, (error) => {
+      if (error) {
+        throw new HttpException(
+          {
+            requestStatus: 'ERROR',
+            message: error.message,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    });
 
-  //   const response = await this.seventService
-  //     .updateSevent(code, seventData)
-  //     .catch((error) => {
-  //       throw new HttpException(
-  //         {
-  //           requestStatus: 'ERROR',
-  //           message: error.message,
-  //         },
-  //         HttpStatus.INTERNAL_SERVER_ERROR,
-  //       );
-  //     });
+    const response = await this.seventService
+      .deleteSevent(code)
+      .catch((error) => {
+        throw new HttpException(
+          {
+            requestStatus: 'ERROR',
+            message: error.message,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      });
 
-  //   return {
-  //     requestStatus: 'SUCCESS',
-  //     message: {
-  //       en: 'Event successfully updated',
-  //       fr: 'Votre evenement a été mis à jour avec succés.',
-  //     },
-  //     data: response,
-  //   };
-  // }
+    return {
+      requestStatus: 'SUCCESS',
+      message: {
+        en: 'Event successfully deleted',
+        fr: 'Votre evenement a été supprimé avec succés.',
+      },
+      data: response,
+    };
+  }
 }
