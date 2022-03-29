@@ -13,15 +13,23 @@ export class SeventService {
     private readonly seventRepository: Repository<SeventEntity>,
   ) {}
 
-  createSevent(sevent: Sevent) {
+  saveSevent(sevent: Sevent) {
     return this.seventRepository.save(sevent);
   }
 
-  returnSevents(code?: string) {
-    if (code) {
-      return this.seventRepository.findOneBy({ code });
-    } else {
-      return this.seventRepository.find();
-    }
+  findSevents() {
+    return this.seventRepository.find();
   }
+
+  findSevent(code?: string) {
+    return this.seventRepository.findOneBy({ code });
+  }
+
+  updateSevent(code: string, sevent: Sevent) {
+    return this.seventRepository.update(code, sevent);
+  }
+
+  // deleteSevent(code: string) {
+  //   return this.seventRepository.delete(code);
+  // }
 }
