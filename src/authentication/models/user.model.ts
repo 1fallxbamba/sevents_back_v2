@@ -3,5 +3,6 @@ export interface User {
   schoolName: string;
   email: string;
   password: string;
+  active: boolean;
   createdAt?: Date;
 }

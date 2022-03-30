@@ -14,6 +14,9 @@ export class UserEntity {
   @Column()
   password: string;
 
+  @Column()
+  active: boolean;
+
   @CreateDateColumn({
     type: 'timestamp without time zone',
     default: () => 'CURRENT_TIMESTAMP',
