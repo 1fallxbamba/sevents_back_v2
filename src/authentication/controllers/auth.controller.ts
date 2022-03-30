@@ -8,7 +8,11 @@ import {
 
 import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
-import { encryptPassword, verifyPassword } from '../../extra/helper';
+import {
+  encryptPassword,
+  verifyPassword,
+  generateCustomID,
+} from '../../extra/helper';
 import { LoginData } from '../models/login-data.model';
 
 @Controller('auth')
@@ -28,6 +32,7 @@ export class AuthController {
         },
       };
     } else {
+      userData.id = generateCustomID('U');
       userData.password = await encryptPassword(userData.password);
       this.authService.saveUser(userData).catch((error) => {
         throw new HttpException(

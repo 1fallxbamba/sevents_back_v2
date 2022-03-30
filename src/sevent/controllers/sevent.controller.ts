@@ -19,7 +19,7 @@ import { unlink } from 'fs';
 
 import { Sevent } from '../models/sevent.model';
 import { SeventService } from '../services/sevent.service';
-import { fileUploadOptions } from '../../extra/helper';
+import { fileUploadOptions, generateCustomID } from '../../extra/helper';
 
 @Controller('sevents')
 export class SeventController {
@@ -28,6 +28,7 @@ export class SeventController {
   @Post()
   @UseInterceptors(FileInterceptor('picture', fileUploadOptions))
   async createSevent(@Body() seventData: Sevent, @UploadedFile() file) {
+    seventData.code = generateCustomID('S');
     seventData.picture = file.filename;
     const response = await this.seventService
       .saveSevent(seventData)

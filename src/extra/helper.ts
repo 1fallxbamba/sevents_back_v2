@@ -14,6 +14,19 @@ export const fileUploadOptions: MulterOptions = {
   }),
 };
 
+export function generateCustomID(forWhat: string) {
+  if (forWhat === 'S') {
+    // Sevent
+    return 'SS_' + Math.random().toString(36).substring(2, 15); // SS = Sevent Sevent
+  } else if (forWhat === 'U') {
+    // User
+    return 'SU_' + Math.random().toString(36).substring(2, 15); // SU = Sevent User
+  } else if (forWhat === 'T') {
+    // Ticket
+    return 'STKT_' + Math.random().toString(36).substring(2, 15); // STKT = Sevent Ticket
+  }
+}
+
 export function encryptPassword(password: string) {
   return bcrypt.hash(password, 10);
 }

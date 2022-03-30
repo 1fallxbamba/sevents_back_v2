@@ -1,5 +1,5 @@
 export interface Sevent {
-  code?: string;
+  code: string;
   title: string;
   description: string;
   location: string;
