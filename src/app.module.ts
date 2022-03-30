@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SeventModule } from './sevent/sevent.module';
 import { ormConfig } from './config/ormconfig';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ormConfig } from './config/ormconfig';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(ormConfig),
     SeventModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
