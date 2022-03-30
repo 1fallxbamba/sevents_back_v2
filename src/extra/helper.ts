@@ -17,3 +17,7 @@ export const fileUploadOptions: MulterOptions = {
 export function encryptPassword(password: string) {
   return bcrypt.hash(password, 10);
 }
+
+export function verifyPassword(given: string, crypted: string) {
+  return bcrypt.compare(given, crypted);
+}
