@@ -3,6 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import 'dotenv/config';
 
 import { SeventEntity } from '../sevent/models/sevent.entity';
+import { UserEntity } from '../authentication/models/user.entity';
 
 export const ormConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -11,6 +12,6 @@ export const ormConfig: TypeOrmModuleOptions = {
   username: process.env.PG_USER,
   password: process.env.PG_PWD,
   database: process.env.PG_DB,
-  entities: [SeventEntity],
+  entities: [SeventEntity, UserEntity],
   autoloadEntities: true,
 };

@@ -12,7 +12,7 @@ export class UserEntity {
   email: string;
 
   @Column()
-  paswword: string;
+  password: string;
 
   @CreateDateColumn({
     type: 'timestamp without time zone',
