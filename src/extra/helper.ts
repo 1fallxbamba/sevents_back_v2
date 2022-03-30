@@ -1,5 +1,8 @@
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+
 import { diskStorage } from 'multer';
+
+import * as bcrypt from 'bcrypt';
 
 export const fileUploadOptions: MulterOptions = {
   storage: diskStorage({
@@ -10,3 +13,7 @@ export const fileUploadOptions: MulterOptions = {
     },
   }),
 };
+
+export function encryptPassword(password: string) {
+  return bcrypt.hash(password, 10);
+}
