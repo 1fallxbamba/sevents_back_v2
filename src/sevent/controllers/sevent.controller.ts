@@ -54,7 +54,7 @@ export class SeventController {
 
   @Get()
   async allSevents() {
-    const sevents = await this.seventService.findSevents().catch((error) => {
+    const sevents = await this.seventService.findAllSevents().catch((error) => {
       throw new HttpException(
         {
           requestStatus: 'ERROR',
@@ -63,6 +63,26 @@ export class SeventController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     });
+
+    return {
+      requestStatus: 'SUCCESS',
+      data: sevents,
+    };
+  }
+
+  @Get('of/:id')
+  async allSeventsOfUser(@Param('id') userID: string) {
+    const sevents = await this.seventService
+      .findSeventsOfUser(userID)
+      .catch((error) => {
+        throw new HttpException(
+          {
+            requestStatus: 'ERROR',
+            message: error.message,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      });
 
     return {
       requestStatus: 'SUCCESS',

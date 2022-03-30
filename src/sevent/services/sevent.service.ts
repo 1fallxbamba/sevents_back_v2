@@ -17,8 +17,12 @@ export class SeventService {
     return this.seventRepository.save(sevent);
   }
 
-  findSevents() {
+  findAllSevents() {
     return this.seventRepository.find({ where: { archived: false } });
+  }
+
+  findSeventsOfUser(id: string) {
+    return this.seventRepository.find({ where: { publisher: id } });
   }
 
   findSevent(code?: string) {

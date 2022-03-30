@@ -6,6 +6,9 @@ export class SeventEntity {
   code: string;
 
   @Column()
+  publisher: string;
+
+  @Column()
   title: string;
 
   @Column()
