@@ -8,9 +8,9 @@ import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { SeventModule } from './sevent/sevent.module';
+import { SeventModule } from './core/sevent/sevent.module';
 import { ormConfig } from './config/ormconfig';
-import { AuthModule } from './authentication/auth.module';
+import { AuthModule } from './core/authentication/auth.module';
 
 @Module({
   imports: [

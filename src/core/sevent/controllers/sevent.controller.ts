@@ -19,7 +19,7 @@ import { unlink } from 'fs';
 
 import { Sevent } from '../models/sevent.model';
 import { SeventService } from '../services/sevent.service';
-import { fileUploadOptions, generateCustomID } from '../../extra/helper';
+import { fileUploadOptions, generateCustomID } from '../../../extra/helper';
 
 @Controller('sevents')
 export class SeventController {

@@ -2,8 +2,8 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import 'dotenv/config';
 
-import { SeventEntity } from '../sevent/models/sevent.entity';
-import { UserEntity } from '../authentication/models/user.entity';
+import { SeventEntity } from '../core/sevent/models/sevent.entity';
+import { UserEntity } from '../core/authentication/models/user.entity';
 
 export const ormConfig: TypeOrmModuleOptions = {
   type: 'postgres',

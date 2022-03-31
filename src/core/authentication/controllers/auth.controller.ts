@@ -12,7 +12,7 @@ import {
   encryptPassword,
   verifyPassword,
   generateCustomID,
-} from '../../extra/helper';
+} from '../../../extra/helper';
 import { LoginData } from '../models/login-data.model';
 
 @Controller('auth')
