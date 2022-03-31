@@ -1,4 +1,42 @@
-import { Controller } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 
-@Controller('ticket')
-export class TicketController {}
+import { Ticket } from '../models/ticket.model';
+import { TicketService } from '../services/ticket.service';
+import { generateCustomID } from '../../../extra/helper';
+
+@Controller('tickets')
+export class TicketController {
+  constructor(private readonly ticketService: TicketService) {}
+
+  @Post()
+  async bookATicket(@Body() ticketData: Ticket) {
+    ticketData.code = generateCustomID('T');
+    const response = await this.ticketService
+      .saveTicket(ticketData)
+      .catch((error) => {
+        throw new HttpException(
+          {
+            requestStatus: 'ERROR',
+            message: error.message,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      });
+
+    return {
+      requestStatus: 'SUCCESS',
+      message: {
+        en: 'New booking successfully placed',
+        fr: `Votre réservation a été placée avec succés, vous recevrez votre ticket sur le ${ticketData.owner.phone}.`,
+      },
+      data: response,
+    };
+  }
+}

@@ -4,5 +4,5 @@ export interface Ticket {
   code?: string;
   event: string;
   owner: TicketOwner;
-  purchaseDate: Date;
+  bookingDate?: Date;
 }

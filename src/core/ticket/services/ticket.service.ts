@@ -16,4 +16,8 @@ export class TicketService {
   saveTicket(ticket: Ticket) {
     return this.ticketRepository.save(ticket);
   }
+
+  findTickets() {
+    return this.ticketRepository.find();
+  }
 }

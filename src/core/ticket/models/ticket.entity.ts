@@ -10,12 +10,12 @@ export class TicketEntity {
   @Column()
   event: string;
 
-  @Column()
+  @Column({ type: 'json' })
   owner: TicketOwner;
 
   @CreateDateColumn({
     type: 'timestamp without time zone',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  purchaseDate: Date;
+  bookingDate: Date;
 }
