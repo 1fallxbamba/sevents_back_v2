@@ -17,7 +17,16 @@ export class TicketService {
     return this.ticketRepository.save(ticket);
   }
 
-  findTickets() {
-    return this.ticketRepository.find();
+  findOwnerTickets(phone: string) {
+    const query = `SELECT tk.code as code, tk."bookingDate", tk.owner->>'quantity' as places,
+      sv.title as event, sv.starting, sv.ending, sv.price
+      from public.tickets tk, public.sevents sv
+       where tk.owner->>'phone'='${phone}'
+       and tk.event = sv.code;`;
+    return this.ticketRepository.query(query);
+  }
+
+  findEventTickets(code: string) {
+    return this.ticketRepository.findBy({ event: code });
   }
 }

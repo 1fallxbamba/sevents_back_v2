@@ -4,6 +4,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
   Post,
 } from '@nestjs/common';
 
@@ -37,6 +38,26 @@ export class TicketController {
         fr: `Votre réservation a été placée avec succés, vous recevrez votre ticket sur le ${ticketData.owner.phone}.`,
       },
       data: response,
+    };
+  }
+
+  @Get('of/owner/:phone')
+  async allOwnerTickets(@Param('phone') ownerPhone: string) {
+    const tickets = await this.ticketService
+      .findOwnerTickets(ownerPhone)
+      .catch((error) => {
+        throw new HttpException(
+          {
+            requestStatus: 'ERROR',
+            message: error.message,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      });
+
+    return {
+      requestStatus: 'SUCCESS',
+      data: tickets,
     };
   }
 }
