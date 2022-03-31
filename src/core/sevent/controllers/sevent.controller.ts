@@ -11,6 +11,7 @@ import {
   Put,
   Delete,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -20,11 +21,13 @@ import { unlink } from 'fs';
 import { Sevent } from '../models/sevent.model';
 import { SeventService } from '../services/sevent.service';
 import { fileUploadOptions, generateCustomID } from '../../../extra/helper';
+import { JwtAuthGuard } from '../../authentication/security/local.guard';
 
 @Controller('sevents')
 export class SeventController {
   constructor(private readonly seventService: SeventService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('picture', fileUploadOptions))
   async createSevent(@Body() seventData: Sevent, @UploadedFile() file) {
@@ -70,6 +73,7 @@ export class SeventController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('of/:id')
   async allSeventsOfUser(@Param('id') userID: string) {
     const sevents = await this.seventService
@@ -108,6 +112,7 @@ export class SeventController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':code')
   @UseInterceptors(FileInterceptor('picture', fileUploadOptions))
   async editSevent(
@@ -154,6 +159,7 @@ export class SeventController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':code')
   async archiveSevent(@Param('code') code: string) {
     const existingSevent = await this.seventService.findSevent(code);
@@ -181,6 +187,7 @@ export class SeventController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':code')
   async removeSevent(@Param('code') code: string) {
     const existingSevent = await this.seventService.findSevent(code);

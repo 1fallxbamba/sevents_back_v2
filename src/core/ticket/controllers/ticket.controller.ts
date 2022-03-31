@@ -6,11 +6,13 @@ import {
   HttpStatus,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
 import { Ticket } from '../models/ticket.model';
 import { TicketService } from '../services/ticket.service';
 import { generateCustomID } from '../../../extra/helper';
+import { JwtAuthGuard } from '../../authentication/security/local.guard';
 
 @Controller('tickets')
 export class TicketController {
@@ -61,6 +63,7 @@ export class TicketController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('of/event/:code')
   async allEventTickets(@Param('code') eventCode: string) {
     const tickets = await this.ticketService

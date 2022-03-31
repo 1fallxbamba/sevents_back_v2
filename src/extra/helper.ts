@@ -17,13 +17,13 @@ export const fileUploadOptions: MulterOptions = {
 export function generateCustomID(forWhat: string) {
   if (forWhat === 'S') {
     // Sevent
-    return 'SS_' + Math.random().toString(36).substring(2, 15); // SS = Sevent Sevent
+    return 'SS_' + Math.random().toString(36).substring(2, 14).toUpperCase(); // SS = Sevent Sevent
   } else if (forWhat === 'U') {
     // User
-    return 'SU_' + Math.random().toString(36).substring(2, 15); // SU = Sevent User
+    return 'SU_' + Math.random().toString(36).substring(2, 14).toUpperCase(); // SU = Sevent User
   } else if (forWhat === 'T') {
     // Ticket
-    return 'STKT_' + Math.random().toString(36).substring(2, 15); // STKT = Sevent Ticket
+    return 'STKT_' + Math.random().toString(36).substring(2, 14).toUpperCase(); // STKT = Sevent Ticket
   }
 }
 
