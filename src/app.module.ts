@@ -11,6 +11,7 @@ import { AppService } from './app.service';
 import { SeventModule } from './core/sevent/sevent.module';
 import { ormConfig } from './config/ormconfig';
 import { AuthModule } from './core/authentication/auth.module';
+import { TicketModule } from './core/ticket/ticket.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthModule } from './core/authentication/auth.module';
     TypeOrmModule.forRoot(ormConfig),
     SeventModule,
     AuthModule,
+    TicketModule,
   ],
   controllers: [AppController],
   providers: [AppService],
