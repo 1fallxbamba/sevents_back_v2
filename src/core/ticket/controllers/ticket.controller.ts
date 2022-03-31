@@ -60,4 +60,24 @@ export class TicketController {
       data: tickets,
     };
   }
+
+  @Get('of/event/:code')
+  async allEventTickets(@Param('code') eventCode: string) {
+    const tickets = await this.ticketService
+      .findEventTickets(eventCode)
+      .catch((error) => {
+        throw new HttpException(
+          {
+            requestStatus: 'ERROR',
+            message: error.message,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      });
+
+    return {
+      requestStatus: 'SUCCESS',
+      data: tickets,
+    };
+  }
 }
